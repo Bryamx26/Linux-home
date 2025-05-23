@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+
+  dns:
+    build: ./dns
+    container_name: dns_service
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    volumes:
+      - ./dns/config:/etc/bind
+    restart: unless-stopped
+
+  minecraft:
+    image: itzg/minecraft-server
+    container_name: minecraft_service
+    environment:
+      EULA: "TRUE"
+    ports:
+      - "25565:25565"
+    volumes:
+      - ./minecraft:/data
+    restart: unless-stopped
+
+  nodejs:
+    build: ./nodejs
+    container_name: node_service
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  web:
+    image: httpd:2.4
+    container_name: web_service
+    ports:
+      - "80:80"
+    volumes:
+      - ./web/sites/html:/usr/local/apache2/htdocs/
+      - ./web/sites/virtualHosts:/usr/local/apache2/conf/extra/
+    restart: unless-stopped
