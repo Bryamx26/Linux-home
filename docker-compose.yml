@@ -14,18 +14,22 @@ services:
       reseau_services:
         ipv4_address: 172.20.0.10
 
-  minecraft:
-    image: itzg/minecraft-server
-    container_name: minecraft_service
-    environment:
-      EULA: "TRUE"
-    ports:
-      - "25565:25565"
-    volumes:
-      - ./minecraft:/data
-    restart: unless-stopped
-    networks:
-      - reseau_services
+    minecraft:
+      image: itzg/minecraft-bedrock-server
+      container_name: minecraft_bedrock_service
+      environment:
+        EULA: "TRUE"
+        GAMEMODE: survival   # optionnel : survival, creative, adventure, spectator
+        DIFFICULTY: easy     # easy, normal, hard, peaceful
+        ALLOW_CHEATS: "false"
+      ports:
+        - "19132:19132/udp"  # port Bedrock par défaut en UDP
+      volumes:
+        - ./minecraft_bedrock:/data
+      restart: unless-stopped
+      networks:
+        - reseau_services
+
 
   music_s:
     build: ./Music_S
