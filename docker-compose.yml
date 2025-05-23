@@ -44,7 +44,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./web/sites/html/Music_s/:/usr/local/apache2/htdocs/
+      - ./web/Music_s/:/usr/local/apache2/htdocs/
       - ./web/sites/virtualHosts:/usr/local/apache2/conf/extra/
     restart: unless-stopped
     networks:
