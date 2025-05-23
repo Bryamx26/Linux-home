@@ -7,7 +7,7 @@ services:
       - "53:53/udp"
       - "53:53/tcp"
     volumes:
-      - ./Linux-home/dns/config:/etc/bind
+      - ./Linux-home/Linux-home/dns/config:/etc/bind
     restart: unless-stopped
     networks:
       reseau_services:
@@ -24,7 +24,7 @@ services:
     ports:
       - "19132:19132/udp"  # port Bedrock par défaut en UDP
     volumes:
-      - ./Linux-home/minecraft_bedrock:/data
+      - ./Linux-home/Linux-home/minecraft_bedrock:/data
     restart: unless-stopped
     networks:
       - reseau_services
@@ -44,8 +44,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./Linux-home/web/Music_s/:/usr/local/apache2/htdocs/
-      - ./Linux-home/web/sites/virtualHosts:/usr/local/apache2/conf/extra/
+      - /Linux-home/Linux-home/web/sites/html/Music_s/:/usr/local/apache2/htdocs/
+      - ./Linux-home/Linux-home/web/sites/virtualHosts/:/usr/local/apache2/conf/extra/
     restart: unless-stopped
     networks:
       - reseau_services
