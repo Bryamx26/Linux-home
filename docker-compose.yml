@@ -11,6 +11,9 @@ services:
     volumes:
       - ./dns/config:/etc/bind
     restart: unless-stopped
+    networks:
+      reseau_services:
+        ipv4_address: 172.20.0.10
 
   minecraft:
     image: itzg/minecraft-server
@@ -22,13 +25,17 @@ services:
     volumes:
       - ./minecraft:/data
     restart: unless-stopped
+    networks:
+      - reseau_services
 
-  nodejs:
-    build: ./nodejs
-    container_name: node_service
+  music_s:
+    build: ./Music_S
+    container_name: music_s_service
     ports:
       - "3000:3000"
     restart: unless-stopped
+    networks:
+      - reseau_services
 
   web:
     image: httpd:2.4
@@ -36,6 +43,15 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./web/sites/html:/usr/local/apache2/htdocs/
+      - ./web/sites/html/Music_s/:/usr/local/apache2/htdocs/
       - ./web/sites/virtualHosts:/usr/local/apache2/conf/extra/
     restart: unless-stopped
+    networks:
+      - reseau_services
+
+networks:
+  reseau_services:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
