@@ -1,6 +1,5 @@
 FROM httpd:2.4
 
-RUN sed -i 's|#Include conf/extra/httpd-vhosts.conf|Include conf/extra/httpd-vhosts.conf|' /usr/local/apache2/conf/httpd.conf
+RUN sed -i 's|#Include conf/extra/httpd-vhosts.conf|IncludeOptional conf/extra/*.conf|' /usr/local/apache2/conf/httpd.conf
 
-COPY ./web/sites/virtualHosts/ /usr/local/apache2/conf/extra/
-COPY ./web/sites/html/ /usr/local/apache2/htdocs/
+COPY ./sites/virtualHosts/ /usr/local/apache2/conf/extra/
