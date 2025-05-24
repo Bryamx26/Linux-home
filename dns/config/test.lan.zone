@@ -7,5 +7,5 @@ $TTL 86400
                 86400 )    ; Minimum
 
 @       IN  NS      ns.test.lan.
-ns      IN  A       192.168.1.53
-music   IN  A       192.168.1.53
+ns      IN  A       192.168.1.11
+music   IN  A       192.168.1.11
