@@ -1,6 +1,6 @@
-zone "test.lan" {
+zone "bryam.lan" {
     type master;
-    file "/etc/bind/test.lan.zone";
+    file "/etc/bind/bryam.lan.zone";
 };
 
 zone "1.168.192.in-addr.arpa" {

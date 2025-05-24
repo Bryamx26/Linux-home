@@ -1,11 +1,11 @@
 $TTL 86400
-@       IN  SOA     ns.test.lan. admin.test.lan. (
+@       IN  SOA     ns.bryam.lan. admin.bryam.lan. (
                 2025052302 ; Serial
                 3600       ; Refresh
                 1800       ; Retry
                 604800     ; Expire
                 86400 )    ; Minimum
 
-@       IN  NS      ns.test.lan.
+@       IN  NS      ns.bryam.lan.
 ns      IN  A       192.168.1.11
 music   IN  A       192.168.1.11
