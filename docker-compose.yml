@@ -7,7 +7,7 @@ services:
       - "53:53/udp"
       - "53:53/tcp"
     volumes:
-      - ./Linux-home/Linux-home/dns/config:/etc/bind
+      - ./dns/config:/etc/bind
     restart: unless-stopped
     networks:
       reseau_services:
@@ -18,13 +18,13 @@ services:
     container_name: minecraft_bedrock_service
     environment:
       EULA: "TRUE"
-      GAMEMODE: survival   # optionnel : survival, creative, adventure, spectator
-      DIFFICULTY: easy     # easy, normal, hard, peaceful
+      GAMEMODE: survival
+      DIFFICULTY: easy
       ALLOW_CHEATS: "false"
     ports:
-      - "19132:19132/udp"  # port Bedrock par défaut en UDP
+      - "19132:19132/udp"
     volumes:
-      - ./Linux-home/Linux-home/minecraft_bedrock:/data
+      - ./minecraft:/data
     restart: unless-stopped
     networks:
       - reseau_services
@@ -44,8 +44,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /Linux-home/Linux-home/web/sites/html/Music_s/:/usr/local/apache2/htdocs/
-      - ./Linux-home/Linux-home/web/sites/virtualHosts/:/usr/local/apache2/conf/extra/
+      - ./web/sites/html/Music_S/:/usr/local/apache2/htdocs/
+      - ./web/sites/virtualHosts/:/usr/local/apache2/conf/extra/
     restart: unless-stopped
     networks:
       - reseau_services
