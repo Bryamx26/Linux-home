@@ -12,7 +12,7 @@ function convertir() {
         return;
       }
 
-      const lien = `http://music_s_service:3000/convert?url=${encodeURIComponent(url)}`;
+      const lien = `http://${hostIP}:5555/convert?url=${encodeURIComponent(url)}`;
 
       window.open(lien);
 
