@@ -7,7 +7,7 @@ const path = require('path');
 const app = express();
 const PORT = 5555;
 
-ffmpeg.setFfmpegPath('C:/ffmpeg/ffmpeg-7.0.2-essentials_build/bin/ffmpeg.exe');
+
 
 const TEMP_DIR = path.join(__dirname, 'temp');
 if (!fs.existsSync(TEMP_DIR)) fs.mkdirSync(TEMP_DIR);
