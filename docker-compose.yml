@@ -41,7 +41,7 @@ services:
         - 8.8.8.8
         - 1.1.1.1
   web:
-    image: httpd:2.4
+    build: ./web
     container_name: web_service
     ports:
       - "80:80"
