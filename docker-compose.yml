@@ -33,7 +33,7 @@ services:
     build: ./Music_S
     container_name: music_s_service
     ports:
-      - "3000:3000"
+      - "5555:5555"
     restart: unless-stopped
     networks:
         - reseau_services
