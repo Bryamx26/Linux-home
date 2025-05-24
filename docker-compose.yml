@@ -29,15 +29,17 @@ services:
     networks:
       - reseau_services
 
-  music_s:
+  music_s_service:
     build: ./Music_S
     container_name: music_s_service
     ports:
-      - "5555:5555"
+      - "3000:3000"
     restart: unless-stopped
     networks:
-      - reseau_services
-
+        - reseau_services
+    dns:
+        - 8.8.8.8
+        - 1.1.1.1
   web:
     image: httpd:2.4
     container_name: web_service
