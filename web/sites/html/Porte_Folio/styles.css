@@ -1,0 +1,67 @@
+/* styles.css */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #00fc0d, #50e3c2);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+section {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+p {
+    font-size: 1.25rem;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 2rem;
+    border-bottom: 2px solid #fff;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: 1.5px;
+}
+#Music_s {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+#Music_s a {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #797979;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(74, 226, 87, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#Music_s a:hover {
+  background-color: #69d653;
+  box-shadow: 0 6px 12px rgba(92, 211, 82, 0.6);
+}
