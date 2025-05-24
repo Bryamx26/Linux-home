@@ -46,6 +46,8 @@ services:
     volumes:
       - ./web/sites/html/Music_s/:/usr/local/apache2/htdocs/
       - ./web/sites/virtualHosts/:/usr/local/apache2/conf/extra/
+      - ./web/sites/virtualHosts/httpd.conf:/usr/local/apache2/conf/httpd.conf
+
     restart: unless-stopped
     networks:
       - reseau_services
