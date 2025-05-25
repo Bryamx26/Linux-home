@@ -12,7 +12,8 @@ function convertir() {
         return;
       }
 
-      const lien = `http://192.168.1.11:5555/convert?url=${encodeURIComponent(url)}`;
+     const lien = `http://music_s_service:5555/convert?url=${encodeURIComponent(url)}`;
+
 
       window.open(lien);
 
