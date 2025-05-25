@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Convertisseur YouTube en MP3</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="matrix"></div>
+
+    <main>
+    <div id="convertiseur">
+        <h1 id ="text"></h1>
+        <input
+        type="text"
+        id="videoUrl"
+        placeholder="Colle un lien YouTube ici"
+        autocomplete="off"
+        
+        />
+        <button
+        onclick="convertir()"
+        >
+        Convertir & Télécharger
+        </button>
+
+        <div id="message" ></div>
+        <div id="loading" >Chargement...</div>
+    </div>
+
+    <footer >
+        Ce site est à des fins éducatives. De plus, il ne doit pas être mis en ligne sur Internet.
+    </footer>
+
+    <script src="music_s.js" async></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+    $(() => {
+    const caracteres = 'abcdefghijklmnopéqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let index_en_cour = 0;
+    let text_lettre_par_lettre = "";
+    const text = "Convertir une vidéo en mp3";
+
+    function afficherLettre() {
+        if (text !== text_lettre_par_lettre) {
+            const currentChar = text[index_en_cour];
+
+            // Gère les espaces
+            if (currentChar === ' ') {
+                text_lettre_par_lettre += ' ';
+                index_en_cour++;
+            } else {
+                // Génère une lettre aléatoire
+                let lettreAleatoire = caracteres[Math.floor(Math.random() * caracteres.length)];
+                $("#text").text(text_lettre_par_lettre + lettreAleatoire);
+
+                // Si c'est la bonne lettre, on l'ajoute définitivement
+                if (lettreAleatoire === currentChar) {
+                    text_lettre_par_lettre += lettreAleatoire;
+                    index_en_cour++;
+                }
+            }
+
+            // Répète après un court délai
+            setTimeout(afficherLettre, 1);
+        }
+    }
+
+    afficherLettre();
+     $('#text').css("text-align","center")
+});
+       
+    </script>
+    </main>
+</body>
+</html>
