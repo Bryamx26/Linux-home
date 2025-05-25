@@ -31,29 +31,30 @@
   <div id="pi_stats_container">
     <img id="raspberry" src="./images/raspberry.webp" alt="Raspberry Pi 5" />
 
-    <div class="info-box" id="cpu_info">
-      <h3>CPU</h3>
-      <p>Température : 50°C</p>
-      <p>Utilisation : 20%</p>
-    </div>
+  <div class="info-box" id="cpu_info">
+  <h3>CPU</h3>
+  <p>Température : {{CPU_TEMP}}°C</p>
+  <p>Utilisation : {{CPU_USAGE}}%</p>
+</div>
 
-    <div class="info-box" id="gpu_info">
-      <h3>GPU</h3>
-      <p>Temp : 45°C</p>
-      <p>U : 15%</p>
-    </div>
+<div class="info-box" id="gpu_info">
+  <h3>GPU</h3>
+  <p>Temp : {{GPU_TEMP}}°C</p>
+  <p>U : {{GPU_USAGE}}%</p>
+</div>
 
-    <div class="info-box" id="ram_info">
-      <h3>RAM</h3>
-      <p>Utilisée : 3.2 GB / 8 GB</p>
-      <p>Utilisation : 40%</p>
-    </div>
+<div class="info-box" id="ram_info">
+  <h3>RAM</h3>
+  <p>Utilisée : {{RAM_USED}} GB / {{RAM_TOTAL}} GB</p>
+  <p>Utilisation : {{RAM_USAGE}}%</p>
+</div>
 
-    <div class="info-box" id="user_info">
-      <h3>Utilisateurs</h3>
-      <p>Connectés : 2</p>
-      <p>Actifs : 1</p>
-    </div>
+<div class="info-box" id="user_info">
+  <h3>Utilisateurs</h3>
+  <p>Connectés : {{USERS_CONNECTED}}</p>
+  <p>Actifs : {{USERS_ACTIVE}}</p>
+</div>
+
   </div>
 </section>
 </body>
