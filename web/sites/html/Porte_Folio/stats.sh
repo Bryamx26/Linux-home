@@ -37,8 +37,8 @@ USERS_CONNECTED=$(escape_sed "$USERS_CONNECTED")
 USERS_ACTIVE=$(escape_sed "$USERS_ACTIVE")
 
 # Fichier template d'entrée et fichier de sortie
-TEMPLATE="index_template.html"
-OUTPUT="index.html"
+TEMPLATE="/usr/local/apache2/htdocs/Porte_Folio/index_template.html"
+OUTPUT="/usr/local/apache2/htdocs/Porte_Folio/index.html"
 
 # Copie du template vers le fichier de sortie
 cp "$TEMPLATE" "$OUTPUT"
