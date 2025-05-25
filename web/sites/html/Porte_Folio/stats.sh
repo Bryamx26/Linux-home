@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Fonction pour échapper / et & dans les variables pour sed
+escape_sed() {
+  echo "$1" | sed -e 's/[\/&]/\\&/g'
+}
+
 # Récupération des données système
 CPU_TEMP=$(cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null)
 if [ -n "$CPU_TEMP" ]; then
@@ -19,6 +24,17 @@ RAM_USAGE=$(free | awk '/^Mem:/ {printf "%.0f", $3/$2 * 100}')
 
 USERS_CONNECTED=$(who | wc -l)
 USERS_ACTIVE=$(w -h | wc -l)
+
+# Échappement des variables pour sed
+CPU_TEMP=$(escape_sed "$CPU_TEMP")
+CPU_USAGE=$(escape_sed "$CPU_USAGE")
+GPU_TEMP=$(escape_sed "$GPU_TEMP")
+GPU_USAGE=$(escape_sed "$GPU_USAGE")
+RAM_USED=$(escape_sed "$RAM_USED")
+RAM_TOTAL=$(escape_sed "$RAM_TOTAL")
+RAM_USAGE=$(escape_sed "$RAM_USAGE")
+USERS_CONNECTED=$(escape_sed "$USERS_CONNECTED")
+USERS_ACTIVE=$(escape_sed "$USERS_ACTIVE")
 
 # Fichier template d'entrée et fichier de sortie
 TEMPLATE="index_template.html"
