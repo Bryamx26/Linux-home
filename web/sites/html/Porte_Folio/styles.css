@@ -1,34 +1,34 @@
-/* styles.css */
-
+/* =============================
+   RESET ET BASE GÉNÉRALE
+============================= */
 body {
+    padding: 0;
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #00fc0d, #50e3c2);
-    color: #fff;
+    width: 100%;
     min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 2rem;
 }
 
-section {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 2rem 3rem;
-    border-radius: 10px;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-    margin-bottom: 2rem;
-    max-width: 600px;
-    width: 100%;
-}
-
+/* =============================
+   TYPOGRAPHIE GÉNÉRALE
+============================= */
 h1 {
     font-size: 3rem;
-    margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 2px;
+    margin: 0.5rem 0;
+}
+
+h2 {
+    font-size: 2rem;
+    border-bottom: 2px solid #fff;
+    margin-bottom: 1rem;
+    letter-spacing: 1.5px;
 }
 
 p {
@@ -36,32 +36,259 @@ p {
     margin-top: 0;
 }
 
-h2 {
-    font-size: 2rem;
-    border-bottom: 2px solid #fff;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
-    letter-spacing: 1.5px;
+/* =============================
+   STRUCTURE DES SECTIONS
+============================= */
+section {
+    padding: 2rem 3rem;
+    margin-bottom: 2rem;
+    max-width: 100%;
+    width: 90%;
+    box-sizing: border-box;
 }
+
+/* =============================
+   SECTION : h_1 (Accueil)
+============================= */
+#h_1 {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: linear-gradient(#ffffff, #ffffff) padding-box,
+                linear-gradient(135deg, #00bfff, #32cd32) border-box;
+    background-clip: padding-box, border-box;
+    -webkit-background-clip: padding-box, border-box;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #111;
+    font-family: sans-serif;
+}
+
+#h_1 h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+#h_1 p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* =============================
+   BOUTON MUSIC
+============================= */
 #Music_s {
-  margin: 1rem 0;
-  text-align: center;
+    text-align: center;
 }
 
 #Music_s a {
-  display: inline-block;
-  padding: 0.6rem 1.2rem;
-  background-color: #797979;
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(74, 226, 87, 0.4);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: black;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background: linear-gradient(#fff, #fff) padding-box,
+                linear-gradient(135deg, #00bfff, #32cd32) border-box;
+    background-clip: padding-box, border-box;
+    -webkit-background-clip: padding-box, border-box;
+    transition: all 0.3s ease;
 }
 
 #Music_s a:hover {
-  background-color: #69d653;
-  box-shadow: 0 6px 12px rgba(92, 211, 82, 0.6);
+    background: linear-gradient(#eafff1, #eafff1) padding-box,
+                linear-gradient(135deg, #32cd32, #00bfff) border-box;
+    box-shadow: 0 6px 12px rgba(92, 211, 82, 0.4);
+    color: black;
+}
+
+/* =============================
+   PI SECTION (titre Pi 5)
+============================= */
+#pi_5 {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#pi_h {
+  font-family: sans-serif;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.pi-text {
+  font-weight: bold;
+  font-size: clamp(1.5rem, 4vw, 2rem); /* texte responsive */
+}
+
+.pi-box {
+  font-size: clamp(1.2rem, 3vw, 2rem); /* texte responsive */
+  font-weight: normal;
+  padding: 4px 10px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: linear-gradient(#fff, #fff) padding-box,
+              linear-gradient(135deg, #00bfff, #32cd32) border-box;
+  background-clip: padding-box, border-box;
+  -webkit-background-clip: padding-box, border-box;
+}
+
+#pi_stats_container {
+  position: relative;
+  width: 100%;
+  max-width: 90vw; /* éviter débordement sur petits écrans */
+  height: 600px;
+  max-height: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#raspberry {
+  max-width: 400px;
+  animation: jump 2s ease-in-out infinite;
+  transition: transform 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.info-box {
+  font-family: sans-serif;
+  font-weight: normal;
+  position: absolute;
+  width: 160px;
+  max-width: 30vw;
+  padding: 0.8rem 1rem;
+  background: linear-gradient(#ffffff, #ffffff) padding-box,
+              linear-gradient(135deg, #00bfff, #32cd32) border-box;
+  border: 2px solid transparent;
+  background-clip: padding-box, border-box;
+  -webkit-background-clip: padding-box, border-box;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: #111;
+  text-align: center;
+  z-index: 2;
+}
+
+.info-box h3 {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  margin-bottom: 0.5rem;
+}
+
+.info-box p {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  margin: 0.2rem 0;
+}
+
+/* Positionnement des blocs autour de l'image */
+#cpu_info {
+  top: 5%;
+  left: 20%;
+  transform: translateX(-50%);
+}
+#gpu_info {
+  top: 5%;
+  right: 5%;
+}
+#ram_info {
+  bottom: 5%;
+  left: 5%;
+}
+#user_info {
+  bottom: 5%;
+  right: 5%;
+}
+
+/* Animation pour l’image */
+@keyframes jump {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+/* =============================
+   MEDIA QUERIES
+============================= */
+@media (max-width: 600px) {
+    section {
+        padding: 1.5rem 2rem;
+        width: 95%;
+        margin-bottom: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    #Music_s a {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+ 
+    #pi_stats_container {
+    width: 100%;
+    height: 70vh;
+  }
+
+  /* Positionnement des blocs autour de l'image pour mobile */
+  #cpu_info {
+    top: 0%;
+    left: 0;
+    transform: none;
+  }
+  #gpu_info {
+    
+    width: 5rem;
+    top: -10%;
+    right: 0%;
+  }
+  #ram_info {
+    bottom: -10%;
+    left: -2%;
+  }
+  #user_info {
+    bottom: -5%;
+    right: 5%;
+  }
+
+  .info-box {
+    width: 90px; /* plus lisible que 10% */
+    max-width: 30vw;
+  }
+
+  #raspberry {
+    width: 60%;
+  }
+
+  .pi-text {
+    font-size: 1.5rem;
+  }
+
+  .pi-box {
+    font-size: 1.2rem;
+  }
+
+
 }
