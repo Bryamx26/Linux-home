@@ -31,7 +31,7 @@ CPU_USAGE=$(escape_sed "$CPU_USAGE")
 GPU_TEMP=$(escape_sed "$GPU_TEMP")
 GPU_USAGE=$(escape_sed "$GPU_USAGE")
 RAM_USED=$(escape_sed "$RAM_USED")
-RAM_TOTAL=$(escape_sed "$RAM_TOTAL")
+
 RAM_USAGE=$(escape_sed "$RAM_USAGE")
 USERS_CONNECTED=$(escape_sed "$USERS_CONNECTED")
 USERS_ACTIVE=$(escape_sed "$USERS_ACTIVE")
@@ -50,7 +50,7 @@ sed -i \
   -e "s/{{GPU_TEMP}}/$GPU_TEMP/g" \
   -e "s/{{GPU_USAGE}}/$GPU_USAGE/g" \
   -e "s/{{RAM_USED}}/$RAM_USED/g" \
-  -e "s/{{RAM_TOTAL}}/$RAM_TOTAL/g" \
+  
   -e "s/{{RAM_USAGE}}/$RAM_USAGE/g" \
   -e "s/{{USERS_CONNECTED}}/$USERS_CONNECTED/g" \
   -e "s/{{USERS_ACTIVE}}/$USERS_ACTIVE/g" \
