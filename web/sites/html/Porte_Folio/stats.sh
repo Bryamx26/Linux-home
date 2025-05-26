@@ -44,7 +44,6 @@ sed -i \
   -e "s|{{RAM_TOTAL}}|$RAM_TOTAL Mo|g" \
   -e "s|{{RAM_USAGE}}|$RAM_USAGE%|g" \
   -e "s|{{USERS_CONNECTED}}|$USERS_CONNECTED|g" \
-
-  "$OUTPUT"
+    "$OUTPUT"
 
 echo "Le fichier $OUTPUT a été mis à jour avec les données système."
