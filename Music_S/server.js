@@ -1,3 +1,10 @@
+const express = require('express');
+const ytdl = require('@distube/ytdl-core');
+const ffmpeg = require('fluent-ffmpeg');
+
+const app = express(); // ✅ TU DOIS d'abord créer l'instance Express
+const PORT = 5555;
+
 app.get('/convert', async (req, res) => {
   const videoUrl = req.query.url;
   if (!videoUrl) return res.status(400).send('❌ URL manquante.');
@@ -24,4 +31,8 @@ app.get('/convert', async (req, res) => {
     console.error('❌ Erreur lors de la récupération des infos :', err);
     res.status(500).send('❌ Impossible de récupérer les infos vidéo.');
   }
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
 });
