@@ -14,3 +14,5 @@ COPY ./sites/html/ /var/www/html/
 
 # Rendre le script exécutable
 RUN chmod +x /var/www/html/Porte_Folio/stats.sh
+RUN chown -R www-data:www-data /var/www/html/Porte_Folio && \
+    chmod -R 755 /var/www/html/Porte_Folio
