@@ -49,9 +49,10 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./web/sites/html/Porte_Folio/Music_s/:/var/www/html/Porte_Folio/Music_s
-      - ./web/sites/html/Porte_Folio/:/var/www/html/Porte_Folio
-      - ./web/sites/virtualHosts/:/etc/apache2/extra/
+     
+    - ./web/sites/html/Porte_Folio/:/var/www/html/Porte_Folio
+    - ./web/sites/virtualHosts/:/etc/apache2/extra/
+
     restart: unless-stopped
     networks:
       - reseau_services
