@@ -1,10 +1,13 @@
-FROM httpd:2.4
+FROM php:8.2-apache
 
-# Active tous les virtual hosts *.conf
-RUN sed -i 's|#Include conf/extra/httpd-vhosts.conf|IncludeOptional conf/extra/*.conf|' /usr/local/apache2/conf/httpd.conf
+# Activer les fichiers .conf custom
+RUN echo "IncludeOptional /etc/apache2/extra/*.conf" >> /etc/apache2/apache2.conf
 
-# Copie les virtual hosts
-COPY ./sites/virtualHosts/ /usr/local/apache2/conf/extra/
+# Copier les VirtualHosts
+COPY ./sites/virtualHosts/ /etc/apache2/extra/
 
-# --- Étapes ajoutées pour cron et le script ---
+# Copier le site dans le conteneur
+COPY ./sites/html/ /var/www/html/
 
+# Rendre le script exécutable
+RUN chmod +x /var/www/html/Porte_Folio/stats.sh
