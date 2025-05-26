@@ -9,7 +9,7 @@ COPY ./sites/html/Porte_Folio/ /var/www/html/Porte_Folio/
 RUN chmod -R 777 /var/www/html/Porte_Folio
 # Donner les bonnes permissions et rendre le script exécutable
 RUN chown -R www-data:www-data /var/www/html/Porte_Folio && \
-    chmod -R 755 /var/www/html/Porte_Folio && \
+    chmod -R 777 /var/www/html/Porte_Folio && \
     chmod +x /var/www/html/Porte_Folio/stats.sh
 
 # Ecrire un VirtualHost par défaut pour pointer sur Porte_Folio
