@@ -6,6 +6,7 @@ RUN a2enmod dav dav_lock rewrite
 # Copier le site dans le dossier Apache
 COPY ./sites/html/Porte_Folio/ /var/www/html/Porte_Folio/
 
+RUN chmod -R 777 /var/www/html/Porte_Folio
 # Donner les bonnes permissions et rendre le script exécutable
 RUN chown -R www-data:www-data /var/www/html/Porte_Folio && \
     chmod -R 755 /var/www/html/Porte_Folio && \
