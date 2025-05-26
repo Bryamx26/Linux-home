@@ -30,6 +30,6 @@ RUN chmod +x /var/www/html/Porte_Folio/stats.sh
 
 # Exposer le port 80
 EXPOSE 80
-
+RUN echo "DirectoryIndex index.php index.html" >> /etc/apache2/apache2.conf
 # Lancer Apache en mode foreground
 CMD ["apache2-foreground"]
