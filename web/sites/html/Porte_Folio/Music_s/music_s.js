@@ -1,28 +1,44 @@
 function convertir() {
-      const url = document.getElementById('videoUrl').value;
-      const message = document.getElementById('message');
-      const loading = document.getElementById('loading');
-      message.classList.add('hidden');
-      loading.classList.remove('hidden');
+  const url = document.getElementById('videoUrl').value;
+  const message = document.getElementById('message');
+  const loading = document.getElementById('loading');
+  message.classList.add('hidden');
+  loading.classList.remove('hidden');
 
-      if (!url.startsWith('https://www.youtube.com/') && !url.startsWith('https://youtu.be/')) {
-        message.textContent = '❌ Veuillez entrer une URL YouTube valide.';
-        message.classList.remove('hidden');
-        loading.classList.add('hidden');
-        return;
-      }
+  if (!url.startsWith('https://www.youtube.com/') && !url.startsWith('https://youtu.be/')) {
+    message.textContent = '❌ Veuillez entrer une URL YouTube valide.';
+    message.classList.remove('hidden');
+    loading.classList.add('hidden');
+    return;
+  }
 
-     const lien = `http://109.130.147.120:8888/convert?url=${encodeURIComponent(url)}`;
+  // Détection réseau local
+  const hostname = window.location.hostname;
+  let baseUrl;
 
+  const isLocal = (
+    hostname === 'localhost' ||
+    hostname.startsWith('192.168.') ||
+    hostname.startsWith('10.') ||
+    /^172\.(1[6-9]|2[0-9]|3[01])\./.test(hostname)
+  );
 
-      window.open(lien);
+  if (isLocal) {
+    baseUrl = 'http://192.168.1.11:5555';
+  } else {
+    baseUrl = 'http://109.130.147.120:8888';
+  }
 
-      setTimeout(() => {
-        loading.classList.add('hidden');
-        message.textContent = '✅ Conversion lancée, le téléchargement va commencer.';
-        message.classList.remove('hidden');
-      }, 2000);
-    }
+  const lien = `${baseUrl}/convert?url=${encodeURIComponent(url)}`;
+
+  window.open(lien);
+
+  setTimeout(() => {
+    loading.classList.add('hidden');
+    message.textContent = '✅ Conversion lancée, le téléchargement va commencer.';
+    message.classList.remove('hidden');
+  }, 2000);
+}
       function generateMatrix() {
       const matrix = document.getElementById("matrix");
       const columns = Math.floor(window.innerWidth / 20);
