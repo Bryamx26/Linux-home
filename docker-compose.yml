@@ -21,6 +21,7 @@ services:
       GAMEMODE: survival
       DIFFICULTY: easy
       ALLOW_CHEATS: "false"
+      LEVEL_NAME: "Bedrock_level"
     ports:
       - "19132:19132/udp"
     volumes:
