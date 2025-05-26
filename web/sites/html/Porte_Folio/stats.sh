@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Récupération des données système
+# Récupération de la température CPU
 CPU_TEMP=$(cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null)
 if [ -n "$CPU_TEMP" ]; then
   CPU_TEMP=$((CPU_TEMP / 1000))
@@ -8,18 +8,20 @@ else
   CPU_TEMP="N/A"
 fi
 
+# Utilisation CPU
 CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print int($2 + $4)}')
 
-GPU_TEMP= vcgencmd measure_temp
-   # À adapter si tu as une commande pour le GPU
+# Remplacement de la température GPU par celle du CPU
+GPU_TEMP=$CPU_TEMP
 
-
-RAM_USED=$(free -g | awk '/^Mem:/ {print $3}')
-RAM_TOTAL=$(free -g | awk '/^Mem:/ {print $2}')
+# RAM en mégaoctets (pour éviter free -g qui peut donner 0 si <1Go)
+RAM_USED=$(free -m | awk '/^Mem:/ {print $3}')
+RAM_TOTAL=$(free -m | awk '/^Mem:/ {print $2}')
 RAM_USAGE=$(free | awk '/^Mem:/ {printf "%.0f", $3/$2 * 100}')
 
-USERS_CONNECTED=$(who | wc -l)
-USERS_ACTIVE=$(w -h | wc -l)
+# Connexions utilisateur (dans un conteneur, c'est souvent 0 ou 1)
+USERS_CONNECTED=$(who 2>/dev/null | wc -l)
+USERS_ACTIVE=$(w -h 2>/dev/null | wc -l)
 
 # Fichier template d'entrée et fichier de sortie
 TEMPLATE="index_template.html"
@@ -28,14 +30,14 @@ OUTPUT="index.html"
 # Copie du template vers le fichier de sortie
 cp "$TEMPLATE" "$OUTPUT"
 
-# Remplacement des placeholders dans le fichier de sortie avec | comme séparateur sed
+# Remplacement des placeholders
 sed -i \
   -e "s|{{CPU_TEMP}}|$CPU_TEMP|g" \
   -e "s|{{CPU_USAGE}}|$CPU_USAGE|g" \
   -e "s|{{GPU_TEMP}}|$GPU_TEMP|g" \
-  -e "s|{{RAM_USED}}|$RAM_USED|g" \
-  -e "s|{{RAM_TOTAL}}|$RAM_TOTAL|g" \
-  -e "s|{{RAM_USAGE}}|$RAM_USAGE|g" \
+  -e "s|{{RAM_USED}}|$RAM_USED Mo|g" \
+  -e "s|{{RAM_TOTAL}}|$RAM_TOTAL Mo|g" \
+  -e "s|{{RAM_USAGE}}|$RAM_USAGE%|g" \
   -e "s|{{USERS_CONNECTED}}|$USERS_CONNECTED|g" \
   -e "s|{{USERS_ACTIVE}}|$USERS_ACTIVE|g" \
   "$OUTPUT"
