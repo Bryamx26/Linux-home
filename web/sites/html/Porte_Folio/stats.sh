@@ -19,9 +19,14 @@ RAM_USED=$(free -m | awk '/^Mem:/ {print $3}')
 RAM_TOTAL=$(free -m | awk '/^Mem:/ {print $2}')
 RAM_USAGE=$(free | awk '/^Mem:/ {printf "%.0f", $3/$2 * 100}')
 
-# Connexions utilisateur (dans un conteneur, c'est souvent 0 ou 1)
-USERS_CONNECTED=$(who 2>/dev/null | wc -l)
-USERS_ACTIVE=$(w -h 2>/dev/null | wc -l)
+# Chemin vers le fichier log Apache (ajuster selon ton conteneur)
+APACHE_LOG="/var/log/apache2/access.log"
+
+if [ -f "$APACHE_LOG" ]; then
+  USERS_CONNECTED=$(awk '{print $1}' "$APACHE_LOG" | sort | uniq | wc -l)
+else
+  USERS_CONNECTED=0
+fi
 
 # Fichier template d'entrée et fichier de sortie
 TEMPLATE="index_template.html"
@@ -39,7 +44,7 @@ sed -i \
   -e "s|{{RAM_TOTAL}}|$RAM_TOTAL Mo|g" \
   -e "s|{{RAM_USAGE}}|$RAM_USAGE%|g" \
   -e "s|{{USERS_CONNECTED}}|$USERS_CONNECTED|g" \
-  -e "s|{{USERS_ACTIVE}}|$USERS_ACTIVE|g" \
+
   "$OUTPUT"
 
 echo "Le fichier $OUTPUT a été mis à jour avec les données système."
