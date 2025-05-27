@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Convertisseur YouTube en MP3</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?var=2">
 </head>
 <body>
     <div id="matrix"></div>
@@ -37,38 +37,61 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
     $(() => {
-    const caracteres = 'abcdefghijklmnopéqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let index_en_cour = 0;
-    let text_lettre_par_lettre = "";
-    const text = "Convertir une vidéo en mp3";
+  
+        const text = "Convertisseur video => mp3";
+let index = 0;
+const delay = 50; // temps entre chaque lettre (en ms)
+const cursorBlinkDelay = 0; // vitesse de clignotement du curseur (en ms)
 
-    function afficherLettre() {
-        if (text !== text_lettre_par_lettre) {
-            const currentChar = text[index_en_cour];
+function clignoterCurseur(callback) {
+    // Enlever le curseur
+    $("#text").html($("#text").html().replace('|', ''));
+    
+    setTimeout(function() {
+        // Remettre le curseur
+        $("#text").append('|');
+        
+        setTimeout(function() {
+            // Enlever à nouveau le curseur
+            $("#text").html($("#text").html().replace('|', ''));
+            
+            setTimeout(callback, cursorBlinkDelay / 3);
+        }, cursorBlinkDelay);
+    }, cursorBlinkDelay);
+}
 
-            // Gère les espaces
-            if (currentChar === ' ') {
-                text_lettre_par_lettre += ' ';
-                index_en_cour++;
-            } else {
-                // Génère une lettre aléatoire
-                let lettreAleatoire = caracteres[Math.floor(Math.random() * caracteres.length)];
-                $("#text").text(text_lettre_par_lettre + lettreAleatoire);
-
-                // Si c'est la bonne lettre, on l'ajoute définitivement
-                if (lettreAleatoire === currentChar) {
-                    text_lettre_par_lettre += lettreAleatoire;
-                    index_en_cour++;
-                }
-            }
-
-            // Répète après un court délai
-            setTimeout(afficherLettre, 1);
-        }
+function afficherLettre() {
+    if (index < text.length) {
+        // Faire clignoter le curseur avant d'ajouter la lettre
+        clignoterCurseur(function() {
+            // Ajouter la lettre suivante
+            $("#text").append(text[index]);
+            
+            // Remettre le curseur
+            $("#text").append('|');
+            
+            index++;
+            setTimeout(afficherLettre, delay);
+        });
+    } else {
+        // Une fois le texte terminé, enlever le curseur définitivement
+        setTimeout(function() {
+            $("#text").html($("#text").html().replace('|', ''));
+        }, delay);
     }
+}
 
-    afficherLettre();
-     $('#text').css("text-align","center")
+// Lancer l'effet après que le DOM soit prêt
+$(document).ready(function () {
+    $('#text').css("text-align", "center");
+    
+    // Commencer avec juste le curseur
+    $("#text").html('|');
+    
+    // Démarrer l'animation après un court délai
+    setTimeout(afficherLettre, delay);
+});
+
 });
        
     </script>
