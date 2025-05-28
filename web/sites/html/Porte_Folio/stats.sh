@@ -20,7 +20,7 @@ RAM_TOTAL=$(free -m | awk '/^Mem:/ {print $2}')
 RAM_USAGE=$(free | awk '/^Mem:/ {printf "%.0f", $3/$2 * 100}')
 
 # Conteneur Docker Apache
-CONTAINER_NAME="mon_apache"
+CONTAINER_NAME="web_services"
 
 # Récupérer les IPs uniques dans les logs Docker stdout (logs Apache)
 USERS_CONNECTED=$(docker logs "$CONTAINER_NAME" 2>/dev/null | awk '{print $1}' | sort | uniq | wc -l)
