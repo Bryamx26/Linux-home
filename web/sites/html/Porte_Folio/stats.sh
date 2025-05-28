@@ -23,7 +23,8 @@ RAM_USAGE=$(free | awk '/^Mem:/ {printf "%.0f", $3/$2 * 100}')
 CONTAINER_NAME="web_services"
 
 # Récupérer les IPs uniques dans les logs Docker stdout (logs Apache)
-USERS_CONNECTED=$(docker logs "$CONTAINER_NAME" 2>/dev/null | awk '{print $1}' | sort | uniq | wc -l)
+# Nombre d'utilisateurs connectés (locaux + SSH)
+USERS_CONNECTED=$(who | wc -l)
 
 # Fichier template d'entrée et fichier de sortie
 TEMPLATE="index_template.html"
