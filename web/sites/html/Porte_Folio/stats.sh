@@ -19,14 +19,11 @@ RAM_USED=$(free -m | awk '/^Mem:/ {print $3}')
 RAM_TOTAL=$(free -m | awk '/^Mem:/ {print $2}')
 RAM_USAGE=$(free | awk '/^Mem:/ {printf "%.0f", $3/$2 * 100}')
 
-# Chemin vers le fichier log Apache (ajuster selon ton conteneur)
-APACHE_LOG="/var/log/apache2/access.log"
+# Conteneur Docker Apache
+CONTAINER_NAME="mon_apache"
 
-if [ -f "$APACHE_LOG" ]; then
-  USERS_CONNECTED=$(awk '{print $1}' "$APACHE_LOG" | sort | uniq | wc -l)
-else
-  USERS_CONNECTED=0
-fi
+# Récupérer les IPs uniques dans les logs Docker stdout (logs Apache)
+USERS_CONNECTED=$(docker logs "$CONTAINER_NAME" 2>/dev/null | awk '{print $1}' | sort | uniq | wc -l)
 
 # Fichier template d'entrée et fichier de sortie
 TEMPLATE="index_template.html"
@@ -35,7 +32,7 @@ OUTPUT="index.html"
 # Copie du template vers le fichier de sortie
 cp "$TEMPLATE" "$OUTPUT"
 
-# Remplacement des placeholders
+# Remplacement des placeholders dans le fichier HTML
 sed -i \
   -e "s|{{CPU_TEMP}}|$CPU_TEMP|g" \
   -e "s|{{CPU_USAGE}}|$CPU_USAGE|g" \
