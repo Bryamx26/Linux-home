@@ -1,5 +1,5 @@
 import express from 'express';
-import ytdl from 'ytdl-core';
+import ytdl from '@distube/ytdl-core';
 import ffmpeg from 'fluent-ffmpeg';
 import ffmpegPath from 'ffmpeg-static';
 import pLimit from 'p-limit';
@@ -9,8 +9,6 @@ ffmpeg.setFfmpegPath(ffmpegPath);
 
 const app = express();
 const PORT = 5555;
-
-// Limite à 2 conversions en parallèle
 const limit = pLimit(2);
 
 app.get('/convert', async (req, res) => {
@@ -21,7 +19,6 @@ app.get('/convert', async (req, res) => {
 
   try {
     await limit(async () => {
-      // Ajout d'un user-agent pour contourner les protections YouTube
       const info = await ytdl.getInfo(videoUrl, {
         requestOptions: {
           headers: {
