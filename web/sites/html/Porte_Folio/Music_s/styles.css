@@ -61,7 +61,7 @@ h1 {
     font-size: 2rem;
     font-weight: 2rem;
     margin-bottom: 20px;
-    height: 60px;
+    
     width: 100%;
  background: linear-gradient(90deg, #001100, #00ff00, #000000, #008000, #000000);
 -webkit-background-clip: text;
