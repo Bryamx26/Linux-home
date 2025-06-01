@@ -41,7 +41,12 @@ services:
     dns:
       - 8.8.8.8
       - 1.1.1.1
-
+  
+    deploy:
+      resources:
+        limits:
+          cpus: '0.8'   # jusqu’à 80 % d’un cœur CPU
+          memory: 512M  # max 512 Mo de RAM
   web:
     build:
       context: ./web
