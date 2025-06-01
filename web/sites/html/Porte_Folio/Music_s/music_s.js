@@ -31,11 +31,10 @@ function convertir() {
 
   const lien = `${baseUrl}/convert?url=${encodeURIComponent(url)}`;
 
-  // Téléchargement direct sans nouvelle fenêtre
-  const a = document.createElement('a');
-  a.href = lien;
-  a.download = '';
-  a.click();
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  iframe.src = lien;
+  document.body.appendChild(iframe);
 
   setTimeout(() => {
     loading.classList.add('hidden');
