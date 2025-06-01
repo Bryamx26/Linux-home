@@ -31,10 +31,7 @@ function convertir() {
 
   const lien = `${baseUrl}/convert?url=${encodeURIComponent(url)}`;
 
-  const iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
-  iframe.src = lien;
-  document.body.appendChild(iframe);
+  window.open(lien);
 
   setTimeout(() => {
     loading.classList.add('hidden');
