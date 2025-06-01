@@ -11,6 +11,6 @@
     "ffmpeg-static": "^5.1.0",
     "fluent-ffmpeg": "^2.1.2",
     "p-limit": "^4.0.0",
-    "ytdl-core": "^5.2.1"
+    "ytdl-core": "^4.11.0"
   }
 }
