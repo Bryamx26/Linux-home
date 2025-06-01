@@ -1,60 +1,56 @@
-const express = require('express');
-const ytdl = require('ytdl-core');
-const ffmpeg = require('fluent-ffmpeg');
-const ffmpegPath = require('ffmpeg-static');
-const pLimit = require('p-limit');
-const stream = require('stream');
+import express from 'express';
+import ytdl from 'ytdl-core';
+import ffmpeg from 'fluent-ffmpeg';
+import ffmpegPath from 'ffmpeg-static';
+import pLimit from 'p-limit';
+import { pipeline } from 'stream';
+import { PassThrough } from 'stream';
+
+ffmpeg.setFfmpegPath(ffmpegPath);
 
 const app = express();
 const PORT = 5555;
 
-ffmpeg.setFfmpegPath(ffmpegPath);
-
-const limit = pLimit(2); // max 2 conversions simultanées
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+// File de traitement (2 simultanés max)
+const limit = pLimit(2);
 
 app.get('/convert', async (req, res) => {
   const videoUrl = req.query.url;
   if (!videoUrl) return res.status(400).send('❌ URL manquante.');
-  console.log(`[+] Requête reçue : ${videoUrl}`);
 
-  // File d’attente avec p-limit
-  limit(() => handleStreaming(videoUrl, res)).catch(err => {
-    console.error('❌ Erreur file de traitement :', err);
-    res.status(500).send('❌ Erreur serveur.');
-  });
+  console.log(`[+] Requête convert reçue pour URL : ${videoUrl}`);
+
+  // Limiter la conversion
+  limit(async () => {
+    try {
+      const info = await ytdl.getInfo(videoUrl);
+      const title = info.videoDetails.title.replace(/[\\/:*?"<>|]/g, '_').substring(0, 50);
+      const filename = `${title}.mp3`;
+
+      const audioStream = ytdl(videoUrl, { quality: 'highestaudio' });
+      const ffmpegStream = new PassThrough();
+
+      ffmpeg(audioStream)
+        .setFfmpegPath(ffmpegPath)
+        .format('mp3')
+        .audioCodec('libmp3lame')
+        .on('error', err => {
+          console.error('❌ Erreur de conversion :', err);
+          res.status(500).send('Erreur pendant la conversion.');
+        })
+        .pipe(ffmpegStream);
+
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader('Content-Type', 'audio/mpeg');
+
+      ffmpegStream.pipe(res);
+    } catch (err) {
+      console.error('❌ Erreur récupération infos :', err);
+      res.status(500).send('Erreur lors de la récupération de la vidéo.');
+    }
+  })();
 });
 
-async function handleStreaming(videoUrl, res) {
-  try {
-    const info = await ytdl.getInfo(videoUrl);
-    const title = info.videoDetails.title.replace(/[\\/:*?"<>|]/g, '_').substring(0, 50);
-
-    res.setHeader('Content-Disposition', `attachment; filename="${title}.mp3"`);
-    res.setHeader('Content-Type', 'audio/mpeg');
-
-    const audioStream = ytdl(videoUrl, { filter: 'audioonly', quality: 'highestaudio' });
-
-    ffmpeg(audioStream)
-      .audioCodec('libmp3lame')
-      .format('mp3')
-      .on('error', err => {
-        console.error('❌ Erreur ffmpeg :', err.message);
-        res.status(500).send('❌ Erreur conversion.');
-      })
-      .pipe(res, { end: true });
-
-    console.log(`🎧 Streaming de : ${title}`);
-  } catch (err) {
-    console.error('❌ Erreur traitement vidéo :', err.message);
-    res.status(500).send('❌ Vidéo non valide ou inaccessible.');
-  }
-}
-
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Serveur en ligne sur http://localhost:${PORT}`);
+  console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
 });
