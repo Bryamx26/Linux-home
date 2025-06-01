@@ -20,13 +20,28 @@ app.get('/convert', async (req, res) => {
   console.log(`[+] Requête convert reçue pour URL : ${videoUrl}`);
 
   try {
-    // Utilisation de p-limit avec await
     await limit(async () => {
-      const info = await ytdl.getInfo(videoUrl);
+      // Ajout d'un user-agent pour contourner les protections YouTube
+      const info = await ytdl.getInfo(videoUrl, {
+        requestOptions: {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+          }
+        }
+      });
+
       const title = info.videoDetails.title.replace(/[\\/:*?"<>|]/g, '_').substring(0, 50);
       const filename = `${title}.mp3`;
 
-      const audioStream = ytdl(videoUrl, { quality: 'highestaudio' });
+      const audioStream = ytdl(videoUrl, {
+        quality: 'highestaudio',
+        requestOptions: {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+          }
+        }
+      });
+
       const ffmpegStream = new PassThrough();
 
       ffmpeg(audioStream)
