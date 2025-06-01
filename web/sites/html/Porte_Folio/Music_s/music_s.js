@@ -31,7 +31,10 @@ function convertir() {
 
   const lien = `${baseUrl}/convert?url=${encodeURIComponent(url)}`;
 
-  window.open(lien);
+  const a = document.createElement('a');
+  a.href = lien;
+  a.download = ''; // Le serveur définira le nom du fichier
+  a.click();
 
   setTimeout(() => {
     loading.classList.add('hidden');

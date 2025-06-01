@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Convertisseur YouTube en MP3</title>
-  <link rel="stylesheet" href="styles.css?var=2">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="matrix"></div>
@@ -26,7 +26,7 @@
         </button>
 
         <div id="message" ></div>
-        <div id="loading" >Chargement...</div>
+        <div id="loading" ></div>
     </div>
 
     <footer >
@@ -36,61 +36,101 @@
     <script src="music_s.js" async></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-    $(() => {
+ $(() => {
   
-        const text = "Convertisseur video => mp3";
-let index = 0;
-const delay = 50; // temps entre chaque lettre (en ms)
-const cursorBlinkDelay = 0; // vitesse de clignotement du curseur (en ms)
+    const texteJaponais = "ビデオコンバーター => mp3";
+    const texteFrancais = "Convertisseur video => mp3";
+    let index = 0;
+    let phase = 1; // 1 = affichage japonais, 2 = effacement, 3 = affichage français
+    const delay = 50; // temps entre chaque lettre (en ms)
+    const cursorBlinkDelay = 30; // vitesse de clignotement du curseur (en ms)
+    const pauseEntrePhases = 1000; // pause entre les phases (en ms)
 
-function clignoterCurseur(callback) {
-    // Enlever le curseur
-    $("#text").html($("#text").html().replace('|', ''));
-    
-    setTimeout(function() {
-        // Remettre le curseur
-        $("#text").append('|');
+    function clignoterCurseur(callback) {
+        // Enlever le curseur
+        $("#text").html($("#text").html().replace('|', ''));
         
         setTimeout(function() {
-            // Enlever à nouveau le curseur
-            $("#text").html($("#text").html().replace('|', ''));
-            
-            setTimeout(callback, cursorBlinkDelay / 3);
-        }, cursorBlinkDelay);
-    }, cursorBlinkDelay);
-}
-
-function afficherLettre() {
-    if (index < text.length) {
-        // Faire clignoter le curseur avant d'ajouter la lettre
-        clignoterCurseur(function() {
-            // Ajouter la lettre suivante
-            $("#text").append(text[index]);
-            
             // Remettre le curseur
             $("#text").append('|');
             
-            index++;
-            setTimeout(afficherLettre, delay);
-        });
-    } else {
-        // Une fois le texte terminé, enlever le curseur définitivement
-        setTimeout(function() {
-            $("#text").html($("#text").html().replace('|', ''));
-        }, delay);
+            setTimeout(function() {
+                // Enlever à nouveau le curseur
+                $("#text").html($("#text").html().replace('|', ''));
+                
+                setTimeout(callback, cursorBlinkDelay / 3);
+            }, cursorBlinkDelay);
+        }, cursorBlinkDelay);
     }
-}
 
-// Lancer l'effet après que le DOM soit prêt
-$(document).ready(function () {
-    $('#text').css("text-align", "center");
-    
-    // Commencer avec juste le curseur
-    $("#text").html('|');
-    
-    // Démarrer l'animation après un court délai
-    setTimeout(afficherLettre, delay);
-});
+    function afficherLettre() {
+        const texteActuel = phase === 1 ? texteJaponais : texteFrancais;
+        
+        if (index < texteActuel.length) {
+            // Faire clignoter le curseur avant d'ajouter la lettre
+            clignoterCurseur(function() {
+                // Ajouter la lettre suivante
+                $("#text").append(texteActuel[index]);
+                
+                // Remettre le curseur
+                $("#text").append('|');
+                
+                index++;
+                setTimeout(afficherLettre, delay);
+            });
+        } else {
+            // Phase terminée
+            if (phase === 1) {
+                // Passer à la phase d'effacement après une pause
+                setTimeout(function() {
+                    phase = 2;
+                    effacerLettre();
+                }, pauseEntrePhases);
+            } else if (phase === 3) {
+                // Animation terminée, enlever le curseur définitivement
+                setTimeout(function() {
+                    $("#text").html($("#text").html().replace('|', ''));
+                }, delay);
+            }
+        }
+    }
+
+    function effacerLettre() {
+        // Utiliser text() au lieu de html() pour éviter les problèmes d'espaces HTML
+        let contenu = $("#text").text().replace('|', '');
+        if (contenu.length > 0) {
+            // Faire clignoter le curseur avant d'effacer la lettre
+            clignoterCurseur(function() {
+                // Enlever le curseur et la dernière lettre/espace
+                let contenu = $("#text").text().replace('|', '');
+                contenu = contenu.slice(0, -1);
+                $("#text").text(contenu);
+                
+                // Remettre le curseur
+                $("#text").append('|');
+                
+                setTimeout(effacerLettre, delay / 2); // Effacement plus rapide
+            });
+        } else {
+            // Effacement terminé, passer à l'affichage du français
+            setTimeout(function() {
+                phase = 3;
+                index = 0;
+                afficherLettre();
+            }, pauseEntrePhases / 2);
+        }
+    }
+
+    // Lancer l'effet après que le DOM soit prêt
+    $(document).ready(function () {
+        $('#text').css("text-align", "start");
+        
+        // Commencer avec juste le curseur
+        $("#text").html('|');
+        
+        // Démarrer l'animation après un court délai
+        setTimeout(afficherLettre, delay);
+    });
 
 });
        
