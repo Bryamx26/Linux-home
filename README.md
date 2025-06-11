@@ -34,9 +34,9 @@ project-root/
 ├── web/
 │   └── sites/
 │       ├── html/
-│       │   └── index.html 
+│       │   └── PorteFolio 
 │       └── virtualHosts/
-│           └── custom-vhost.conf (si besoin)
+│           └── custom-vhost.conf 
 │
 └── README.md
 
