@@ -29,12 +29,12 @@ project-root/
 │
 ├── nodejs/
 │   ├── Dockerfile
-│   └── serv.js
+│   └── server.js
 │
 ├── web/
 │   └── sites/
 │       ├── html/
-│       │   └── index.html (exemple)
+│       │   └── index.html 
 │       └── virtualHosts/
 │           └── custom-vhost.conf (si besoin)
 │
